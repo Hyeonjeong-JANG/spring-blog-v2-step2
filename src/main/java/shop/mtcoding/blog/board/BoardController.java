@@ -13,7 +13,13 @@ import java.util.List;
 @Controller
 public class BoardController {
 
-    private final BoardNativeRepository boardNativeRepository;
+    private final BoardPersistRepository boardNativeRepository;
+
+    @PostMapping("/board/save")
+    public String save(BoardRequest.SaveDTO requestDTO){
+        boardNativeRepository.save(requestDTO.toEntity());
+        return "redirect:/";
+    }
 
     @PostMapping("/board/{id}/update")
     public String update(@PathVariable Integer id, String title, String content, String username){
@@ -32,12 +38,6 @@ public class BoardController {
     @PostMapping("/board/{id}/delete")
     public String delete(@PathVariable Integer id){
         boardNativeRepository.deleteById(id);
-        return "redirect:/";
-    }
-
-    @PostMapping("/board/save")
-    public String save(String title, String content, String username){
-        boardNativeRepository.save(title, content, username);
         return "redirect:/";
     }
 

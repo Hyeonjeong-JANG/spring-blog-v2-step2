@@ -2,11 +2,14 @@ package shop.mtcoding.blog.board;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
 
 @Data
+@NoArgsConstructor
 @Table(name = "board_tb")
 @Entity
 public class Board {
@@ -16,6 +19,13 @@ public class Board {
     private String title;
     private String content;
     private String username;
+
+    @CreationTimestamp
     private Timestamp createdAt;
 
+    public Board(String title, String content, String username) {
+        this.title = title;
+        this.content = content;
+        this.username = username;
+    }
 }

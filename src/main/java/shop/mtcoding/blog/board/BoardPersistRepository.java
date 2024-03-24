@@ -1,14 +1,23 @@
 package shop.mtcoding.blog.board;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
 public class BoardPersistRepository {
     private final EntityManager em;
+
+    public List<Board> findAll() {
+        Query query = em.createQuery("select b from Board b order by b.id desc", Board.class);
+        return query.getResultList();
+    }
+
     @Transactional
     public Board save(Board board) { //아직 저장 안 된 Board (순수한 우유)
         // 1. 비영속 객체

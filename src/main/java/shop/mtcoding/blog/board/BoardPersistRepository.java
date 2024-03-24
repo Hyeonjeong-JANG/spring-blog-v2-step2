@@ -13,10 +13,25 @@ import java.util.List;
 public class BoardPersistRepository {
     private final EntityManager em;
 
-    public Board findById(int id){
+    @Transactional
+    public void updateById(int id, BoardRequest.UpdateDTO requestDTO) {
+        //여기서 조회 걸어줌!
+        Board board = findById(id);
+        board.update(requestDTO);   //보드에 있는 update 메소드
+    } // 더티체킹
+
+    @Transactional
+    public void deleteById(int id) {
+        Query query = em.createQuery("delete from Board b where b.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    public Board findById(int id) {
         Board board = em.find(Board.class, id); //앞이 클래스, 뒤가 pk
         return board;
     }
+
     public List<Board> findAll() {
         Query query = em.createQuery("select b from Board b order by b.id desc", Board.class);
         return query.getResultList();

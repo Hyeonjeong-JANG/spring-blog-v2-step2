@@ -25,4 +25,11 @@ public class Board {
         this.content = content;
         this.username = username;
     }
+
+    //다른 곳에서 재사용하려면 DTO 이름을 적을 수 없다!
+    public void update(BoardRequest.UpdateDTO reqDTO) {
+        this.title = reqDTO.getTitle();
+        this.content = reqDTO.getContent();
+        this.username = reqDTO.getUsername();
+    }
 }
